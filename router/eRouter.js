@@ -10,7 +10,9 @@ constructor (persistencia){
 start (){
     const router = express.Router()
 //GET
-router.get('/:id?', this.#cb.obtenerElementos)
+//router.get('/estadisticas', this.#cb.obtenerEstadisticas)
+router.get('/', this.#cb.obtenerElementos)
+//router.get('/estadisticas', this.#cb.obtenerEstadisticas)
 //POST
 router.post('/', this.#cb.guardarElementos)
 //PUT

@@ -7,19 +7,26 @@ constructor(persistencia){
 this.#servicio= new Servicio(persistencia)
 }
 
+// obtenerEstadisticas= async (req,res) => {
+// const estadisticas = await this.#servicio.obtenerEstadisticas()
+// res.json(estadisticas)
+// }
+
 obtenerElementos = async (req,res) => {
-const { id } = req.params
-const elemento = await this.#servicio.obtenerElementos(id)
+//const { id } = req.params
+const elemento = await this.#servicio.obtenerElementos()
 res.json(elemento)
 }
 
 guardarElementos = async (req,res) => {
     try{
-const elemento = req.body
-if(!Object.keys(elemento).length){
-            throw new Error('el elemento esta vacio')
-        }
-const elementoGuardado = await this.#servicio.guardarElemento(elemento)
+const {color} = req.body
+console.log(color)
+console.log(typeof(color))
+
+
+
+const elementoGuardado = await this.#servicio.guardarElemento(color)
 res.json(elementoGuardado)
 }catch(error){
         res.status(500).json({error: error.message})

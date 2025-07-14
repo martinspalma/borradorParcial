@@ -1,28 +1,30 @@
 import fs from 'fs'
-import ArchivoPersistencia from './archivoPersistencia'
+import ArchivoPersistencia from './archivoPersistencia.js'
 
 class ModelFile extends ArchivoPersistencia{
     
     constructor() {
 
-        super('./data/usuarios.json')
+        super('./data/colores.json')
     }
 
 
     obtenerElemento = async (id) => {
 
         const elementos = await this.leer()
-        const elementoBuscado = elementos.find(e => e.id === id)
-        return elementoBuscado || {}
+        const elementoBuscado = elementos.filter(e => Number(e.id) == Number(id))
+        return (elementoBuscado.length > 0) ? elementoBuscado : { mensaje: "no existe el numero" }
     }
 
     obtenerElementos = async () => {
         return await this.leer() || {}
     }
 
-    guardarElementos = async (elemento) => {
+    guardarElemento = async (elemento) => {
         const elementos = await this.leer()
-        elemento.id = String(parseInt(elementos[elementos.length - 1]?.id || 0) + 1)
+        if (elementos.some(el => el.color === elemento.color)) {
+    throw new Error('color ya ingresado');
+  }
         elementos.push(elemento)
         await this.escribir(elementos)
         return elemento
